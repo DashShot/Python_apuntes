@@ -85,5 +85,16 @@ for key,value in goals_by_player.items():
 
                             [ ZIP ]
 
-- La función                     
+- La función genera un iterador de tuplas a partir de varias colecciones
+
+EJEM:
+spanish = ['uno', 'dos', 'tres']
+english = ['one', 'two', 'three']
+french = ['une', 'deux', 'trois']
+zipped = zip(spanish, english, french)
+print(list(zipped))# [('uno', 'one', 'une'), ('dos', 'two', 'deux'), ('tres', 'three', 'trois')]
+
+
+
+               
 '''
