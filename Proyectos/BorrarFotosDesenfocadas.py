@@ -43,6 +43,13 @@ def is_blurred (image, threshold=90):
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 '''
 
+import cv2
+import numpy as np
+import tqdm
+import shutil
+import json
+
 from PIL import Image
 with Image.open("./Images/python-hero.jpg") as im:
     im.rotate(45).show()
+
