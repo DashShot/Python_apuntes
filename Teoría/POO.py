@@ -152,5 +152,137 @@ if UrjcStudent.is_full_name(student_name):
             return None
         s = name.split(" ")
         return cls(s[0], s[1])
+---------------------------------------------------------------
+- Sobrecarga de métodos
+    - parámetros por defecto
+    - args, kwargs
+    - un nombre para cada cosa
+    - decoradores
+------------------------------------------------------------------
+- Decorador @property / @atrb.setter
+                (getter)
+
+    - aumentar legibilidad y mantener encapsulación
+
+class Complex:
+
+    def __init__(self, real, img):
+        self._parts = [real, img]
+
+    def __str__(self):
+        if self.img<0:
+            return f"{self.real}{self.img}i"
+        return f"{self.real}+{self.img}i"
+
+    @property
+    def real(self):
+        return self._parts[0]
+
+    @real.setter
+    def real(self, value):
+        self._parts[0] = value
+
+    @property
+    def img(self):
+        return self._parts[1]
+
+    @img.setter
+    def img(self, value):
+        self._parts[1] = value
+
+if __name__== "__main__" :
+    c = Complex ( 1, -1)
+    c.real= 4
+    c.img=5
+    print(c.real, c.img)
+--------------------------------------------------------
+
+- Herencia
+
+    - resolución de nombres (atributos/métodos) MRO
+        -Orden:
+            - Busqueda de abajo-arriba por la jerarquía de la herencia
+            - Si herencia multiple -> abajo-arriba y izquierda-derecha
+
+class Person:
+    def __init__ (self, name, job= None, pay=0):
+        self._name = name
+        self._job = job
+        self._pay = pay
+
+    def lastname (self):
+        return self._name.split()[- 1]
+
+    def giveraise (self, percent):
+        self._pay = int(self._pay * ( 1 + percent))
+
+    def __str__(self):
+        return f'[Person: {self._name}, {self._pay}]'
+
+class Manager(Person):
+    def __init__ (self, name, pay):
+    # Person.__init__(self, name, 'mgr', pay)
+        super().__init__ (name, 'mgr', pay)
+
+    def giveraise (self, percent, bonus= .10):
+        super().giveraise(percent + bonus)
+
+if __name__ == '__main__':
+    bob = Person( 'Bob Smith')
+    sue = Person( 'Sue Jones', job='dev', pay=100000)
+    tom = Manager( 'Tom Jones', 50000)
+    employees = [bob, sue, tom]
+
+    for employee in employees:
+        employee.giveraise( 10)
+    print(employee)
+
+-------------------
+-Resolución de nombres MRO
+class A: pass
+class B: pass
+class C: pass
+class D: pass
+class E: pass
+class K1(C, A, B): pass
+class K3(A, D): pass
+class K2(B, D, E): pass
+class Z(K1, K3, K2): pass
+print(Z.mro())
+# [Z, K1, C, K3, A, K2, B, D, E, O]
+
+---------------------------------
+- Classes abstractas
+
+from abc import ABC, abstractmethod
+
+class Processor(ABC):
+    def __init__(self, reader, writer):
+        self.reader = reader
+        self.writer = writer
+
+    def process(self):
+        for line in self.reader:
+            processed_line = self.converter(line)
+            self.writer.write(processed_line)
+
+    @abstractmethod
+    def converter(self, data):
+    pass
+
+class Uppercase(Processor):
+    def converter(self, data):
+    return data.upper()
+
+class HTMLize:
+    def write(self, line):
+    print(f"<PRE>{line.rstrip()}</PRE>")
+
+import sys
+if __name__ == '__main__':
+    obj = Uppercase(open('./ElhPolar_esV1.lex'), HTMLize())
+    obj.process()
+
+Duck typing: “si se comporta como un pato, es un pato”
 
 '''
