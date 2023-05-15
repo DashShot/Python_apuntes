@@ -1,4 +1,5 @@
-def firstlast(sequence):
-    return sequence[:1] + sequence[-1:]
+def flipped_dict(a_dict):
+    return {value: key for key, value in a_dict.items()}
 
-print(firstlast('abcd'))
+
+print(flipped_dict({'a': 1, 'b': 2, 'c': 3}))
